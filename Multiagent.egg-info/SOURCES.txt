@@ -11,3 +11,7 @@ app/backend/api.py
 app/common/__init__.py
 app/common/custom_exception.py
 app/common/logger.py
+app/config/__init__.py
+app/config/settings.py
+app/core/__init__.py
+app/core/ai_agent.py
