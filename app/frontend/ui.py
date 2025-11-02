@@ -10,7 +10,7 @@ logger = get_logger(__name__)
 st.set_page_config(page_title="Multiagent AI Chat", layout="wide")
 st.title("Multiagent AI Chat Interface")
 
-system_prompt = st.text_area("Define your AI agent's behavior:", height=70, value="Example: You are a helpful AI assistant.")
+system_prompt = st.text_area("Define your AI agent's behavior:", height=70)
 selected_model = st.selectbox("Choose AI Model:", settings.AUTHORIZED_MODELS)
 
 allow_search = st.checkbox("Enable Web Search", value=False)
