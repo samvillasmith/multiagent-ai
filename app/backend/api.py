@@ -5,6 +5,7 @@ from app.core.ai_agent import get_response_from_ai_agents
 from app.config.settings import settings 
 from app.common.logger import get_logger
 from app.common.custom_exception import CustomException
+import traceback  
 
 logger = get_logger(__name__)
 
@@ -17,17 +18,17 @@ class RequestState(BaseModel):
     allow_search: bool
 
 @app.post("/chat")
-def chat_endpoint(request:RequestState):
-    logger.info(f"Received request for model: {request.model}")
+def chat_endpoint(request: RequestState):
+    logger.info(f"Received request for model: {request.model_name}")
 
-    if request.model_name not in settings.ALLOWED_MODEL_NAMES:
+    if request.model_name not in settings.AUTHORIZED_MODELS:
         logger.warning("Invalid model name")
         raise HTTPException(status_code=400, detail="Invalid model")
     
     try: 
         response = get_response_from_ai_agents(
             request.model_name,
-            request.system_prompt,
+            request.messages,
             request.allow_search,
             request.system_prompt
         )
@@ -37,5 +38,6 @@ def chat_endpoint(request:RequestState):
         return {"response": response}
     
     except Exception as e:
-        logger.error("An error occurred during response generation")
+        logger.error(f"An error occurred during response generation: {str(e)}")  # Changed this
+        logger.error(f"Full traceback: {traceback.format_exc()}")
         raise HTTPException(status_code=500, detail=str(CustomException("Error generating response", e)))

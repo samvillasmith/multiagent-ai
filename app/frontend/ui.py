@@ -7,7 +7,7 @@ from app.common.custom_exception import CustomException
 
 logger = get_logger(__name__)
 
-st.set_page_config(page_title="Multiagent AI Chat", layout="wide", layout="centered")
+st.set_page_config(page_title="Multiagent AI Chat", layout="wide")
 st.title("Multiagent AI Chat Interface")
 
 system_prompt = st.text_area("Define your AI agent's behavior:", height=70, value="Example: You are a helpful AI assistant.")
@@ -36,7 +36,7 @@ if st.button("Ask the Agent") and user_input.strip():
             logger.info("Successfully received response from backend")
 
             st.subheader("Agent Response")
-            st.markdown(agent_response.replace("\n", "<br>", unsafe_allow_html=True))
+            st.markdown(agent_response.replace("\n", "<br>"), unsafe_allow_html=True)
         else:
             logger.error("Backend error")
             st.error(str(CustomException("Failed to reach backend", Exception(f"Status code: {response.status_code}"))))
