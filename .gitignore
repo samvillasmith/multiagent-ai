@@ -1,3 +1,4 @@
 .env
 venv-cicd
 __pycache__
+aws
